@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import History from './components/History';
 
-const API = '/api';
+const API = import.meta.env.VITE_API_URL || '/api';
 
 export default function App() {
   const [user, setUser] = useState(null);
