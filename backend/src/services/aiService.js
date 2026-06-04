@@ -45,7 +45,7 @@ async function analyzeResume(resumeText, jobDescription) {
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3.5-flash' });
 
     const prompt = PROMPT_TEMPLATE
       .replace('{resumeText}', resumeText)
