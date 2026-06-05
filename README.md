@@ -1,145 +1,142 @@
 # 🧠 ResumeAI — AI-Powered Resume Analyzer
 
-An intelligent web application that analyzes resumes against job descriptions using **Google Gemini AI**. Get instant match scores, identify skill gaps, receive improvement suggestions, and prepare for interviews.
+ResumeAI is a full-stack web application designed to help job seekers and recruiters analyze resumes against job descriptions. Powered by **Google Gemini 3.5 Flash**, the app extracts text from resumes, performs dynamic semantic matching against job requirements, and provides actionable insights including match scores, missing skills, improvement tips, and custom interview questions.
 
-![Tech Stack](https://img.shields.io/badge/React-Vite-blue?style=flat-square) ![Backend](https://img.shields.io/badge/Node.js-Express-green?style=flat-square) ![AI](https://img.shields.io/badge/AI-Gemini%201.5-purple?style=flat-square) ![DB](https://img.shields.io/badge/DB-SQLite%20%7C%20MySQL-orange?style=flat-square)
+---
 
-## ✨ Features
+### 🌐 Live Links
+* **Live Demo (Frontend)**: [https://ai-resume-analyzer-frontend-lemon.vercel.app/](https://ai-resume-analyzer-frontend-lemon.vercel.app/)
+* **API Server (Backend)**: [https://ai-resume-analyzer-backend-5bu0.onrender.com/](https://ai-resume-analyzer-backend-5bu0.onrender.com/)
 
-| Feature | Description |
-|---------|-------------|
-| 📄 Resume Upload | Upload PDF or DOCX resumes with drag & drop |
-| 💼 JD Matching | Paste any job description for comparison |
-| 🤖 AI Analysis | Gemini 1.5 Flash analyzes skills, gaps & fit |
-| 📊 Match Score | Visual circular gauge showing match percentage |
-| 🎯 Skills Comparison | Side-by-side matched vs. missing skills |
-| 💡 Improvements | Actionable suggestions to strengthen your resume |
-| ❓ Interview Prep | AI-generated interview questions based on gaps |
-| 📥 PDF Report | Download full analysis report as PDF |
-| 🌓 Dark/Light Mode | Toggle between themes |
-| 🔐 Authentication | JWT-based login & registration |
-| 📋 History | All past analyses stored and accessible |
-| 🗄️ Database | SQLite (default) or MySQL support |
+---
 
-## 🏗️ Architecture
+## 🚀 Key Features
+
+* **Drag & Drop Upload**: Support for parsing text from PDF and DOCX files.
+* **Semantic Match Score**: Interactive gauge displaying an ATS-style match percentage based on the job description.
+* **Skills Gap Analysis**: Side-by-side breakdown highlighting matching skills and identifying missing keywords.
+* **Tailored Improvements**: Specific, actionable recommendations to align the resume closer to the target role.
+* **AI-Generated Interview Questions**: Custom interview questions generated dynamically from identified skill gaps.
+* **PDF Report Export**: Allows users to download a summary of the analysis report locally.
+* **Theme Customization**: Responsive dark and light theme settings.
+* **Persistent History**: Keeps track of all past analyses on a left-sidebar panel, loaded directly from the database.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend**: React 18, Vite, Vanilla CSS, jsPDF, html2canvas
+* **Backend**: Node.js, Express.js, Sequelize ORM, Multer
+* **AI Engine**: Google Gemini 3.5 Flash (via `@google/generative-ai`)
+* **Authentication**: JSON Web Tokens (JWT) + bcryptjs
+* **Database**: SQLite (default for development/demo) / MySQL (ready for production)
+* **File Processing**: pdf-parse, mammoth
+
+---
+
+## 🏗️ Project Architecture
 
 ```
 ai-resume-analyzer/
-├── backend/                    # Express.js API
+├── backend/                    # Express API Server
 │   ├── src/
-│   │   ├── config/db.js        # Sequelize DB config
-│   │   ├── controllers/        # Auth & Analysis logic
-│   │   ├── middleware/auth.js   # JWT middleware
-│   │   ├── models/             # User & Analysis models
-│   │   ├── routes/             # API routes
-│   │   ├── services/aiService.js # Gemini AI integration
-│   │   └── index.js            # Server entry
+│   │   ├── config/db.js        # Sequelize connection configuration
+│   │   ├── controllers/        # Auth & Analysis business logic
+│   │   ├── middleware/auth.js   # JWT verification middleware
+│   │   ├── models/             # Sequelize database schemas
+│   │   ├── routes/             # Route declarations
+│   │   ├── services/aiService.js # Gemini 3.5 API integration service
+│   │   └── index.js            # Express entry point
 │   ├── .env.example
 │   └── package.json
-├── frontend/                   # React + Vite
+├── frontend/                   # React Single Page App
 │   ├── src/
-│   │   ├── components/         # Auth, Navbar, Dashboard, History
-│   │   ├── styles/main.css     # Design system
-│   │   ├── App.jsx             # Root component
-│   │   └── main.jsx            # Entry point
+│   │   ├── components/         # Auth, Navbar, Dashboard, History UI
+│   │   ├── styles/main.css     # Unified glassmorphic CSS design system
+│   │   ├── App.jsx             # Main router and state coordinator
+│   │   └── main.jsx            # React mounting file
 │   └── package.json
-├── schema.sql                  # MySQL schema
-├── package.json                # Root scripts
+├── schema.sql                  # MySQL database creation script
+├── package.json                # Root package configurations
 └── README.md
 ```
 
-## 🚀 Quick Start
+---
+
+## 💻 Local Installation & Setup
+
+If you want to run this project locally, follow these steps:
 
 ### Prerequisites
-- **Node.js** 18+ and **npm**
-- **Gemini API Key** — [Get one free from Google AI Studio](https://aistudio.google.com/apikey)
+* **Node.js** (v18 or higher recommended)
+* **npm** (comes bundled with Node)
+* A **Gemini API Key** from [Google AI Studio](https://aistudio.google.com/apikey) (Free tier works perfectly)
 
-### 1. Clone & Install
-
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-resume-analyzer.git
+git clone https://github.com/18mukeshram/ai-resume-analyzer.git
 cd ai-resume-analyzer
+```
+
+### 2. Install Dependencies
+Install all package dependencies for the root workspace, frontend, and backend folders with a single script:
+```bash
 npm run install:all
 ```
 
-### 2. Configure Environment
-
+### 3. Environment Setup
+Configure your environment variables for the backend:
 ```bash
 cp backend/.env.example backend/.env
 ```
-
-Edit `backend/.env` and add your Gemini API key:
-
+Open `backend/.env` and fill in your details:
 ```env
-GEMINI_API_KEY=your_actual_key_here
+PORT=5000
+JWT_SECRET=any_secure_random_string_here
+GEMINI_API_KEY=your_google_gemini_api_key_here
+DB_DIALECT=sqlite
 ```
 
-### 3. Run the App
-
+### 4. Run the Development Servers
+Start both the React dev server and the Express API server concurrently:
 ```bash
 npm run dev
 ```
+Open your browser and navigate to **`http://localhost:5173`**.
 
-This starts both the backend (port 5000) and frontend (port 5173) concurrently.
+---
 
-Open **http://localhost:5173** in your browser.
+## 🗄️ Database Configurations
 
-### 4. Use the App
-1. **Register** a new account
-2. **Upload** a resume (PDF/DOCX)
-3. **Paste** a job description
-4. Click **Analyze Resume**
-5. View your match score, skills comparison, improvements, and interview questions
-6. **Download** the report as PDF
+This application uses **Sequelize ORM**, allowing you to switch between SQLite and MySQL instantly by changing your configuration.
 
-## 🗄️ Database
+### Option A: SQLite (Default — Zero Setup)
+No database server installation is required. A `database.sqlite` file is automatically created inside the `backend` folder on the first launch.
 
-### SQLite (Default — Zero Setup)
-Works out of the box. A `database.sqlite` file is created automatically.
-
-### MySQL (Optional)
-1. Create the database using `schema.sql`:
+### Option B: MySQL (Production Ready)
+1. Initialize the tables using the provided schema:
    ```bash
    mysql -u root -p < schema.sql
    ```
-2. Update `backend/.env`:
+2. Update the environment variables in `backend/.env`:
    ```env
    DB_DIALECT=mysql
    DB_HOST=localhost
    DB_NAME=ai_resume_analyzer
-   DB_USER=root
-   DB_PASSWORD=your_password
+   DB_USER=your_mysql_username
+   DB_PASSWORD=your_mysql_password
    ```
 
-## 📐 Database Schema
-
-See [schema.sql](./schema.sql) for the full MySQL-compatible schema.
-
-| Table | Fields |
-|-------|--------|
-| **users** | id, username, email, password (hashed), createdAt, updatedAt |
-| **analyses** | id, userId (FK), resumeName, jobDescription, resumeText, matchScore, matchedSkills, missingSkills, improvements, interviewQuestions, summary, createdAt, updatedAt |
+---
 
 ## 🔌 API Endpoints
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/api/auth/register` | ❌ | Create account |
-| POST | `/api/auth/login` | ❌ | Sign in |
-| GET | `/api/auth/me` | ✅ | Get current user |
-| POST | `/api/analysis/analyze` | ✅ | Upload resume + JD for analysis |
-| GET | `/api/analysis/history` | ✅ | Get past analyses |
-| DELETE | `/api/analysis/:id` | ✅ | Delete an analysis |
+### Authentication Routes
+* `POST /api/auth/register` — Create a new account.
+* `POST /api/auth/login` — Sign in and receive a JWT.
+* `GET /api/auth/me` — Verify and fetch active session details.
 
-## 🛠️ Tech Stack
-
-- **Frontend**: React 18, Vite, Vanilla CSS, jsPDF, html2canvas
-- **Backend**: Node.js, Express.js, Sequelize ORM
-- **AI**: Google Gemini 1.5 Flash via `@google/generative-ai`
-- **Auth**: JWT (jsonwebtoken) + bcryptjs
-- **Database**: SQLite3 (default) / MySQL
-- **File Parsing**: pdf-parse, mammoth
-
-## 📄 License
-
-MIT
+### Analysis Routes
+* `POST /api/analysis/analyze` — Upload a resume (PDF/DOCX) and paste a job description. Returns the parsed AI analysis.
+* `GET /api/analysis/history` — Get all past resume analyses for the logged-in user.
+* `DELETE /api/analysis/:id` — Delete a specific analysis record by ID.
